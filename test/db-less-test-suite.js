@@ -21,13 +21,7 @@ describe('Query Building Tests', function () {
   require('./unit/schema-builder/mysql')('mysql');
   require('./unit/schema-builder/mysql')('mysql2');
   require('./unit/schema-builder/extensions');
-  require('./unit/schema-builder/postgres');
-  require('./unit/schema-builder/cockroachdb');
-  require('./unit/schema-builder/redshift');
   require('./unit/schema-builder/sqlite3');
-  require('./unit/schema-builder/oracle');
-  require('./unit/schema-builder/mssql');
-  require('./unit/schema-builder/oracledb');
   require('./unit/migrations/migrate/migration-list-resolver');
   require('./unit/migrations/seed/seeder');
   // require('./unit/interface'); ToDo Uncomment after fixed

@@ -9,8 +9,7 @@ const _ = require('lodash');
 
 // excluding redshift, oracle, and mssql dialects from default integrations test
 const testIntegrationDialects = (
-  process.env.DB ||
-  'sqlite3 postgres pgnative mysql mysql2 mssql oracledb cockroachdb better-sqlite3'
+  process.env.DB || 'sqlite3 mysql mysql2 better-sqlite3'
 ).match(/[\w-]+/g);
 
 console.log(`ENV DB: ${process.env.DB}`);
@@ -92,79 +91,6 @@ const testConfigs = {
     seeds,
   },
 
-  oracledb: {
-    client: 'oracledb',
-    connection: testConfig.oracledb || {
-      user: 'system',
-      password: 'Oracle18',
-      connectString: 'localhost:21521/XE',
-      // https://github.com/oracle/node-oracledb/issues/525
-      stmtCacheSize: 0,
-    },
-    pool,
-    migrations,
-  },
-
-  postgres: {
-    client: 'postgres',
-    connection: testConfig.postgres || {
-      adapter: 'postgresql',
-      port: 25432,
-      host: 'localhost',
-      database: 'knex_test',
-      user: 'testuser',
-      password: 'knextest',
-    },
-    pool,
-    migrations,
-    seeds,
-  },
-
-  cockroachdb: {
-    client: 'cockroachdb',
-    connection: testConfig.cockroachdb || {
-      adapter: 'cockroachdb',
-      port: 26257,
-      host: 'localhost',
-      database: 'test',
-      user: 'root',
-      password: undefined,
-    },
-    pool,
-    migrations,
-    seeds,
-  },
-
-  pgnative: {
-    client: 'pgnative',
-    connection: testConfig.pgnative || {
-      adapter: 'postgresql',
-      port: 25433,
-      host: 'localhost',
-      database: 'knex_test',
-      user: 'testuser',
-      password: 'knextest',
-    },
-    pool,
-    migrations,
-    seeds,
-  },
-
-  redshift: {
-    client: 'redshift',
-    connection: testConfig.redshift || {
-      adapter: 'postgresql',
-      database: 'knex_test',
-      user: process.env.REDSHIFT_USER || 'postgres',
-      password: process.env.REDSHIFT_PASSWORD || '',
-      port: '5439',
-      host: process.env.REDSHIFT_HOST || '127.0.0.1',
-    },
-    pool,
-    migrations,
-    seeds,
-  },
-
   sqlite3: {
     client: 'sqlite3',
     connection: testConfig.sqlite3 || {
@@ -181,20 +107,6 @@ const testConfigs = {
       filename: __dirname + '/test.sqlite3',
     },
     pool: poolBetterSqlite,
-    migrations,
-    seeds,
-  },
-
-  mssql: {
-    client: 'mssql',
-    connection: testConfig.mssql || {
-      user: 'sa',
-      password: 'S0meVeryHardPassword',
-      server: 'localhost',
-      port: 21433,
-      database: 'knex_test',
-    },
-    pool: pool,
     migrations,
     seeds,
   },

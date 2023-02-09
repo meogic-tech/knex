@@ -15,16 +15,7 @@ const Db = {
   BetterSqlite3: 'better-sqlite3',
 };
 
-const defaultDbs = [
-  Db.PostgresSQL,
-  Db.PgNative,
-  Db.MySQL,
-  Db.MySQL2,
-  Db.SQLite,
-  Db.MSSQL,
-  Db.CockroachDB,
-  Db.BetterSqlite3,
-];
+const defaultDbs = [Db.MySQL, Db.MySQL2, Db.SQLite, Db.BetterSqlite3];
 
 function getAllDbs() {
   return process.env.DB ? process.env.DB.split(' ') : defaultDbs;

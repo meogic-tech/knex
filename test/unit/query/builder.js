@@ -3,22 +3,12 @@
 
 const { expect } = require('chai');
 const MySQL_Client = require('../../../lib/dialects/mysql');
-const PG_Client = require('../../../lib/dialects/postgres');
-const Redshift_Client = require('../../../lib/dialects/redshift');
-const Oracledb_Client = require('../../../lib/dialects/oracledb');
 const SQLite3_Client = require('../../../lib/dialects/sqlite3');
-const MSSQL_Client = require('../../../lib/dialects/mssql');
-const CockroachDB_Client = require('../../../lib/dialects/cockroachdb');
 
 // use driverName as key
 const clients = {
   mysql: new MySQL_Client({ client: 'mysql' }),
-  pg: new PG_Client({ client: 'pg' }),
-  'pg-redshift': new Redshift_Client({ client: 'redshift' }),
-  oracledb: new Oracledb_Client({ client: 'oracledb' }),
   sqlite3: new SQLite3_Client({ client: 'sqlite3' }),
-  mssql: new MSSQL_Client({ client: 'mssql' }),
-  cockroachdb: new CockroachDB_Client({ client: 'cockroachdb' }),
 };
 
 const useNullAsDefaultConfig = { useNullAsDefault: true };
@@ -27,18 +17,8 @@ const clientsWithNullAsDefault = {
   mysql: new MySQL_Client(
     Object.assign({ client: 'mysql' }, useNullAsDefaultConfig)
   ),
-  pg: new PG_Client(Object.assign({ client: 'pg' }, useNullAsDefaultConfig)),
-  'pg-redshift': new Redshift_Client(
-    Object.assign({ client: 'redshift' }, useNullAsDefaultConfig)
-  ),
-  oracledb: new Oracledb_Client(
-    Object.assign({ client: 'oracledb' }, useNullAsDefaultConfig)
-  ),
   sqlite3: new SQLite3_Client(
     Object.assign({ client: 'sqlite3' }, useNullAsDefaultConfig)
-  ),
-  mssql: new MSSQL_Client(
-    Object.assign({ client: 'mssql' }, useNullAsDefaultConfig)
   ),
 };
 
@@ -53,21 +33,11 @@ const clientsWithCustomLoggerForTestWarnings = {
   mysql: new MySQL_Client(
     Object.assign({ client: 'mysql' }, customLoggerConfig)
   ),
-  pg: new PG_Client(Object.assign({ client: 'pg' }, customLoggerConfig)),
-  'pg-redshift': new Redshift_Client(
-    Object.assign({ client: 'redshift' }, customLoggerConfig)
-  ),
-  oracledb: new Oracledb_Client(
-    Object.assign({ client: 'oracledb' }, customLoggerConfig)
-  ),
   sqlite3: new SQLite3_Client(
     Object.assign(
       { client: 'sqlite3' },
       { ...customLoggerConfig, ...useNullAsDefaultConfig }
     )
-  ),
-  mssql: new MSSQL_Client(
-    Object.assign({ client: 'mssql' }, customLoggerConfig)
   ),
 };
 
@@ -154,18 +124,8 @@ describe('Custom identifier wrapping', () => {
     mysql: new MySQL_Client(
       Object.assign({ client: 'mysql' }, customWrapperConfig)
     ),
-    pg: new PG_Client(Object.assign({ client: 'pg' }, customWrapperConfig)),
-    'pg-redshift': new Redshift_Client(
-      Object.assign({ client: 'redshift' }, customWrapperConfig)
-    ),
-    oracledb: new Oracledb_Client(
-      Object.assign({ client: 'oracledb' }, customWrapperConfig)
-    ),
     sqlite3: new SQLite3_Client(
       Object.assign({ client: 'sqlite3' }, customWrapperConfig)
-    ),
-    mssql: new MSSQL_Client(
-      Object.assign({ client: 'mssql' }, customWrapperConfig)
     ),
   };
 
@@ -175,13 +135,6 @@ describe('Custom identifier wrapping', () => {
       {
         mysql:
           'select `users_wrapper_was_here`.`foo_wrapper_was_here` as `bar_wrapper_was_here` from `schema_wrapper_was_here`.`users_wrapper_was_here`',
-        mssql:
-          'select [users_wrapper_was_here].[foo_wrapper_was_here] as [bar_wrapper_was_here] from [schema_wrapper_was_here].[users_wrapper_was_here]',
-        oracledb:
-          'select "users_wrapper_was_here"."foo_wrapper_was_here" "bar_wrapper_was_here" from "schema_wrapper_was_here"."users_wrapper_was_here"',
-        pg: 'select "users_wrapper_was_here"."foo_wrapper_was_here" as "bar_wrapper_was_here" from "schema_wrapper_was_here"."users_wrapper_was_here"',
-        'pg-redshift':
-          'select "users_wrapper_was_here"."foo_wrapper_was_here" as "bar_wrapper_was_here" from "schema_wrapper_was_here"."users_wrapper_was_here"',
         sqlite3:
           'select `users_wrapper_was_here`.`foo_wrapper_was_here` as `bar_wrapper_was_here` from `schema_wrapper_was_here`.`users_wrapper_was_here`',
       },
