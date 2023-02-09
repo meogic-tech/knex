@@ -57,12 +57,6 @@ describe('Views', () => {
             })
             .testSql((tester) => {
               tester(
-                ['pg', 'pg-redshift', 'cockroachdb', 'oracledb'],
-                [
-                  'create view "view_test" ("a", "b") as select "a", "b" from "table_view" where "b" > \'10\'',
-                ]
-              );
-              tester(
                 ['sqlite3', 'mysql'],
                 [
                   "create view `view_test` (`a`, `b`) as select `a`, `b` from `table_view` where `b` > '10'",
@@ -93,12 +87,6 @@ describe('Views', () => {
               );
             })
             .testSql((tester) => {
-              tester(
-                ['pg', 'pg-redshift', 'cockroachdb', 'oracledb'],
-                [
-                  'create view "view_test" as select "a", "b" from "table_view" where "b" > \'10\'',
-                ]
-              );
               tester(
                 ['sqlite3', 'mysql'],
                 [
@@ -148,12 +136,6 @@ describe('Views', () => {
               );
             })
             .testSql((tester) => {
-              tester(
-                ['pg', 'pg-redshift', 'cockroachdb', 'oracledb'],
-                [
-                  'create or replace view "view_test" ("a", "b") as select "a", "b" from "table_view" where "b" > \'10\'',
-                ]
-              );
               tester(
                 ['mysql'],
                 [
@@ -211,12 +193,6 @@ describe('Views', () => {
             })
             .testSql((tester) => {
               tester(
-                ['pg', 'pg-redshift', 'cockroachdb', 'oracledb'],
-                [
-                  'create or replace view "view_test" as select "a", "b" from "table_view" where "b" > \'10\'',
-                ]
-              );
-              tester(
                 ['mysql'],
                 [
                   "create or replace view `view_test` as select `a`, `b` from `table_view` where `b` > '10'",
@@ -258,12 +234,6 @@ describe('Views', () => {
               );
             })
             .testSql((tester) => {
-              tester(
-                ['pg', 'cockroachdb', 'pg-redshift', 'oracledb'],
-                [
-                  'create materialized view "mat_view" ("a", "b") as select "a", "b" from "table_view" where "b" > \'10\'',
-                ]
-              );
             });
 
           await knex
@@ -394,12 +364,6 @@ describe('Views', () => {
             })
             .testSql((tester) => {
               tester(
-                ['pg', 'cockroachdb', 'pg-redshift'],
-                [
-                  'create view "view_test" ("a", "b") as select "a", "b" from "table_view" where "b" > \'10\' with local check option',
-                ]
-              );
-              tester(
                 ['mysql'],
                 [
                   "create view `view_test` (`a`, `b`) as select `a`, `b` from `table_view` where `b` > '10' with local check option",
@@ -416,12 +380,6 @@ describe('Views', () => {
               view.cascadedCheckOption();
             })
             .testSql((tester) => {
-              tester(
-                ['pg', 'cockroachdb', 'pg-redshift'],
-                [
-                  'create view "view_test" ("a", "b") as select "a", "b" from "table_view" where "b" > \'10\' with cascaded check option',
-                ]
-              );
               tester(
                 ['mysql'],
                 [
